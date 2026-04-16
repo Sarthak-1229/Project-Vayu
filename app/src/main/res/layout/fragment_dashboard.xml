@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F5F9"
+    android:fillViewport="true"
+    android:overScrollMode="always">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- HEADER -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌬️ Project Vayu"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#0F172A"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Real-Time Air Quality Monitor"
+            android:textSize="14sp"
+            android:textColor="#64748B"
+            android:layout_marginBottom="24dp" />
+
+        <!-- CONNECTION STATUS CARD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="20dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● Disconnected"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#EF4444" />
+
+            <TextView
+                android:id="@+id/tv_device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No device connected"
+                android:textSize="13sp"
+                android:textColor="#94A3B8"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_scan"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Connect to Device"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#3B82F6"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btn_disconnect"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Disconnect"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#EF4444"
+            android:visibility="gone"
+            android:layout_marginBottom="24dp" />
+
+        <!-- SECTION LABEL -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LIVE SENSOR DATA"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="#94A3B8"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="10dp" />
+
+        <!-- ROW 1: Temp & Humidity -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="20dp"
+                android:layout_marginEnd="6dp"
+                android:elevation="2dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌡️ Temperature"
+                    android:textSize="12sp"
+                    android:textColor="#64748B"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--.- °C"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#F97316"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="20dp"
+                android:layout_marginStart="6dp"
+                android:elevation="2dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💧 Humidity"
+                    android:textSize="12sp"
+                    android:textColor="#64748B"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--.- %"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#3B82F6"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- AQI CARD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="24dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🌫️ Air Quality Index"
+                    android:textSize="12sp"
+                    android:textColor="#64748B"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_aqi_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#64748B"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="#F1F5F9" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_aqi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="---"
+                android:textSize="60sp"
+                android:textStyle="bold"
+                android:textColor="#0F172A"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- ROW 2: Anion & Control Mode -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="20dp"
+                android:gravity="center"
+                android:layout_marginEnd="6dp"
+                android:elevation="2dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚡ Anion Gen"
+                    android:textSize="12sp"
+                    android:textColor="#64748B"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_anion_hw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="---"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#0F172A"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="20dp"
+                android:gravity="center"
+                android:layout_marginStart="6dp"
+                android:elevation="2dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔄 Control Mode"
+                    android:textSize="12sp"
+                    android:textColor="#64748B"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_control_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AUTO"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#22C55E"
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_anion_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Turn Anion ON"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#3B82F6"
+            android:enabled="false"
+            android:layout_marginBottom="12dp" />
+
+        <!-- FIREBASE STATUS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+            <TextView
+                android:id="@+id/tv_firebase_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="☁ Firebase: idle"
+                android:textSize="13sp"
+                android:textColor="#94A3B8" />
+            <TextView
+                android:id="@+id/tv_last_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No data received yet"
+                android:textSize="12sp"
+                android:textColor="#CBD5E1"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

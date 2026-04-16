@@ -12,6 +12,14 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
+
+        // Read API key from local.properties (gitignored)
+        def localProps = new Properties()
+        def localPropsFile = rootProject.file('local.properties')
+        if (localPropsFile.exists()) {
+            localProps.load(new FileInputStream(localPropsFile))
+        }
+        buildConfigField "String", "GROQ_API_KEY", "\"${localProps.getProperty('GROQ_API_KEY', '')}\""
     }
 
     buildTypes {
@@ -19,6 +27,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     compileOptions {
@@ -32,6 +44,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
 
-    // HTTP client for Firebase REST API (no google-services.json needed)
+    // HTTP client for Firebase REST API
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    
+    // JSON parsing for AI response
+    implementation 'com.google.code.gson:gson:2.10.1'
 }

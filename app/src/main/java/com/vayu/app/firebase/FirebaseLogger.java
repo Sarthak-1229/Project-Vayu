@@ -35,6 +35,11 @@ public class FirebaseLogger {
         void onPushSuccess(int totalPushes);
         void onPushFailed(String reason);
     }
+    
+    public interface FetchCallback {
+        void onSuccess(String jsonArrayData);
+        void onError(String error);
+    }
 
     // ── Fields ────────────────────────────────────────────────────────────────
     private final OkHttpClient         http      = new OkHttpClient();
@@ -87,6 +92,29 @@ public class FirebaseLogger {
     public void shutdown() {
         stop();
         http.dispatcher().executorService().shutdown();
+    }
+    
+    /** Fetch the last 20 AQI readings using REST query params. */
+    public void fetchRecentData(FetchCallback fetchCb) {
+        String fetchUrl = DB_URL + "?orderBy=%22%24key%22&limitToLast=20";
+        Request request = new Request.Builder().url(fetchUrl).get().build();
+        
+        http.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                handler.post(() -> fetchCb.onError(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String res = response.body().string();
+                if (response.isSuccessful()) {
+                    handler.post(() -> fetchCb.onSuccess(res));
+                } else {
+                    handler.post(() -> fetchCb.onError("HTTP " + response.code()));
+                }
+            }
+        });
     }
 
     // ── Internal ──────────────────────────────────────────────────────────────

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F5F9"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📊 AI Analyzer"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#0F172A"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personalised Health Insights from Your AQI Data"
+            android:textSize="14sp"
+            android:textColor="#64748B"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Info Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_card"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:elevation="1dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ℹ️"
+                android:textSize="18sp"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fetches your last 20 AQI readings from Firebase and sends them to Gemini AI for analysis."
+                android:textSize="13sp"
+                android:textColor="#64748B"
+                android:lineSpacingExtra="3dp" />
+        </LinearLayout>
+
+        <!-- Analyze Button -->
+        <Button
+            android:id="@+id/btn_analyze"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="⚡ Analyze Recent Air Trends"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_btn_analyze"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Result Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_analyzer_card"
+            android:padding="24dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ANALYSIS RESULT"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#94A3B8"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="12dp" />
+
+            <ProgressBar
+                android:id="@+id/progress_analyzer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:indeterminateTint="#8B5CF6" />
+
+            <TextView
+                android:id="@+id/tv_analysis_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Press the button above to pull your recent air quality data from Firebase and run a personalised Gemini AI health analysis."
+                android:textSize="15sp"
+                android:textColor="#334155"
+                android:lineSpacingExtra="5dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
