@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vayu.app.ai.GeminiService;
 import com.vayu.app.ble.BLEManager;
 import com.vayu.app.firebase.FirebaseLogger;
+import com.vayu.app.model.AqiAnalysis;
 import com.vayu.app.model.SensorData;
 import com.vayu.app.ui.AnalyzerFragment;
 import com.vayu.app.ui.ChatFragment;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements BLEManager.Listen
 
     private SensorData lastSensorData = null;
     private String connectedDeviceName = null;
+    private AqiAnalysis latestAnalysis = null;
 
     private final DashboardFragment dashboardFragment = new DashboardFragment();
     private final ChatFragment chatFragment = new ChatFragment();
@@ -98,6 +100,16 @@ public class MainActivity extends AppCompatActivity implements BLEManager.Listen
     public boolean isBleConnected() { return ble.isConnected(); }
     public String getConnectedDeviceName() { return connectedDeviceName; }
     public SensorData getLastSensorData() { return lastSensorData; }
+    public AqiAnalysis getLatestAnalysis() { return latestAnalysis; }
+
+    public void setLatestAnalysis(AqiAnalysis analysis) {
+        this.latestAnalysis = analysis;
+        // Feed analysis context to chatbot
+        if (analysis != null) {
+            gemini.setAnalysisContext(analysis.toPromptSummary() +
+                    "\nAI Insight: " + analysis.aiInsight);
+        }
+    }
 
     // ── Actions from Dashboard ───────────────────────────────────────────────
     public void startConnection() {

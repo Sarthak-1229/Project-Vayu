@@ -30,6 +30,9 @@ public class GeminiService {
 
     // Chat history stored as OpenAI-format message objects
     private final List<JsonObject> chatHistory = new ArrayList<>();
+    
+    // Latest analysis context for enriching chat responses
+    private String analysisContext = "";
 
     public interface OutputListener {
         void onResponse(String result);
@@ -38,6 +41,13 @@ public class GeminiService {
 
     public GeminiService(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    /**
+     * Set the latest analysis context so the chatbot can reference it.
+     */
+    public void setAnalysisContext(String context) {
+        this.analysisContext = (context != null) ? context : "";
     }
 
     /**
@@ -50,7 +60,14 @@ public class GeminiService {
         userMsg.addProperty("content", text);
         chatHistory.add(userMsg);
 
-        String systemPrompt = "You are Vayu, a friendly AI air quality assistant. Keep answers short, fun, and helpful.";
+        String systemPrompt = "You are Vayu, a friendly AI air quality assistant. Keep answers short, fun, and helpful. "
+                + "When answering health or air quality questions, use the user's actual data if available. "
+                + "Focus on actionable respiratory health advice.";
+
+        // Inject analysis context if available
+        if (!analysisContext.isEmpty()) {
+            systemPrompt += "\n\nThe user's latest air quality analysis:\n" + analysisContext;
+        }
 
         execute(buildPayload(systemPrompt, chatHistory), new OutputListener() {
             @Override
@@ -75,14 +92,17 @@ public class GeminiService {
 
     /**
      * One-shot request for analyzing air quality trends.
+     * Now receives structured stats from AqiAnalysis rather than raw JSON.
      */
-    public void analyzeTrends(String jsonData, OutputListener listener) {
-        String systemPrompt = "You are an expert health and environmental AI. Analyze the following recently logged JSON data of Air Quality Index (AQI) readings over time. Provide a concise, personalized health insight paragraph and any recommendations. Don't use markdown formatting, just plain text.";
+    public void analyzeTrends(String structuredPrompt, OutputListener listener) {
+        String systemPrompt = "You are an expert health and environmental AI specializing in respiratory health. "
+                + "Analyze the provided air quality data and give a clear, actionable health assessment. "
+                + "Don't use markdown formatting, just plain text. Be specific about health risks and protective measures.";
 
         List<JsonObject> messages = new ArrayList<>();
         JsonObject userMsg = new JsonObject();
         userMsg.addProperty("role", "user");
-        userMsg.addProperty("content", "Here is the recent AQI data:\n" + jsonData);
+        userMsg.addProperty("content", structuredPrompt);
         messages.add(userMsg);
 
         execute(buildPayload(systemPrompt, messages), listener);
