@@ -1,0 +1,7 @@
+In this project We have created A hardware system comprising of ESP32,DHT22, MQ135, GP2Y1010AU0F and anion generator. 
+The sensors will sense temperature, humidity, gas, and dust density. 
+The ESP itself will calculate the AQI and send out a signal through BLE in the form of temperature, humidity, AQI, and anion generator status(0 or 1). 
+Our aim is to create an application which will receive this BLE string after connection with the device and display the data in a user-friendly format. 
+The application will also send a signal to the ESP to start or stop the anion generator. 
+The application, on receiving the values through BLE, is displaying them beautifully on the application dashboard We'll send the AQI to the Firebase backend database and store it there. 
+Let us not worry so much about the UI and just work on functionality, providing a Bluetooth connection, receiving the values, and sending them to the Firebase backend first, we will work on the UI later. 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Semantic -->
+    <color name="green">#22C55E</color>
+    <color name="red">#EF4444</color>
+    <color name="blue">#3B82F6</color>
+    <color name="orange">#F97316</color>
+    <color name="amber">#F59E0B</color>
+    <color name="purple">#A855F7</color>
+
+    <!-- Background / Surface -->
+    <color name="background">#F1F5F9</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="text_dim">#94A3B8</color>
+</resources>
