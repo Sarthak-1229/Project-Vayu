@@ -135,21 +135,29 @@ void readSensors() {
 }
 
 // --- AQI Calculation ---
+// Helper: Linear interpolation for EPA AQI formula
+float mapAQI(float val, float valMin, float valMax, float aqiMin, float aqiMax) {
+  return ((aqiMax - aqiMin) / (valMax - valMin)) * (val - valMin) + aqiMin;
+}
+
 int aqiFromPM25(float pm) {
-  if (pm <  0)     return 0;
-  if (pm <= 12.0)  return map(pm, 0,     12.0,  0,   50);
-  if (pm <= 35.4)  return map(pm, 12.1,  35.4,  51,  100);
-  if (pm <= 55.4)  return map(pm, 35.5,  55.4,  101, 150);
-  if (pm <= 150.4) return map(pm, 55.5,  150.4, 151, 200);
-  if (pm <= 250.4) return map(pm, 150.5, 250.4, 201, 300);
-  return map(pm, 250.5, 500.4, 301, 500);
+  if (pm < 0) return 0;
+  if (pm <= 12.0)  return round(mapAQI(pm, 0.0,   12.0,  0,   50));
+  if (pm <= 35.4)  return round(mapAQI(pm, 12.1,  35.4,  51,  100));
+  if (pm <= 55.4)  return round(mapAQI(pm, 35.5,  55.4,  101, 150));
+  if (pm <= 150.4) return round(mapAQI(pm, 55.5,  150.4, 151, 200));
+  if (pm <= 250.4) return round(mapAQI(pm, 150.5, 250.4, 201, 300));
+  if (pm <= 350.4) return round(mapAQI(pm, 250.5, 350.4, 301, 400));
+  return round(mapAQI(pm, 350.5, 500.4, 401, 500));
 }
 
 int aqiFromGas(int raw) {
-  if (raw < 400)  return 50;
-  if (raw < 800)  return map(raw, 400,  800,  51,  100);
-  if (raw < 1500) return map(raw, 800,  1500, 101, 150);
-  return map(raw, 1500, 4095, 151, 300);
+  if (raw < 0) return 0;
+  if (raw <= 400)  return round(mapAQI(raw, 0,    400,  0,   50));
+  if (raw <= 800)  return round(mapAQI(raw, 401,  800,  51,  100));
+  if (raw <= 1500) return round(mapAQI(raw, 801,  1500, 101, 150));
+  if (raw <= 2500) return round(mapAQI(raw, 1501, 2500, 151, 300));
+  return round(mapAQI(raw, 2501, 4095, 301, 500));
 }
 
 // --- Setup ---
