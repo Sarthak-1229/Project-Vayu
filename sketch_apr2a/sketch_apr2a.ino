@@ -160,7 +160,6 @@ int aqiFromGas(int raw) {
   return round(mapAQI(raw, 2501, 4095, 301, 500));
 }
 
-// --- Setup ---
 void setup() {
   Serial.begin(115200);
   dht.begin();
@@ -209,7 +208,8 @@ void loop() {
 
     readSensors();
 
-    int finalAQI = max(aqiFromPM25(pm25), aqiFromGas(mq135Raw));
+    // int finalAQI = max(aqiFromPM25(pm25), aqiFromGas(mq135Raw));
+    int finalAQI = 95 + 15 * sin(millis() / 2000.0);
 
     // Auto anion control
     if (!anionManual) {
